@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import Header from "@/components/Header";
 import ProjectGrid from "@/components/ProjectGrid";
+import ArchitectureDiagram from "@/components/ArchitectureDiagram";
 import Capabilities from "@/components/Capabilities";
 import TechStack from "@/components/TechStack";
 import ChatWidget from "@/components/ChatWidget";
@@ -21,6 +22,7 @@ export default function Home() {
     <>
       <Header />
       <ProjectGrid onLearnMore={handleLearnMore} />
+      <ArchitectureDiagram />
       <Capabilities />
       <TechStack />
       <Footer />
