@@ -43,7 +43,7 @@ export const projects: Project[] = [
     category: "Voice AI / Personalization",
     blurb:
       "A voice-enabled AI platform where users build their own personalized guide through a 7-step wizard \u2014 choosing personality traits, communication style, voice, and focus areas. Then they talk to it. Real-time voice conversations with sub-300ms latency. The system remembers context across sessions, adapting to each user over time. A fundamentally different approach to human-AI interaction.",
-    url: null,
+    url: "https://numen-ai-v2.vercel.app",
   },
   {
     id: "fight-analyst",
