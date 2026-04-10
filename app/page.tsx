@@ -25,8 +25,8 @@ export default function Home() {
       <Header />
       <ProjectGrid onLearnMore={handleLearnMore} />
       <ArchitectureDiagram />
-      <MemorySection videoSrc="" />
-      <SecuritySection videoSrc="" />
+      <MemorySection videoSrc="/video_clips/KG Example-highlight.mp4" />
+      <SecuritySection videoSrc="/video_clips/Med-Prompt-Inject.mp4" />
       <Capabilities />
       <TechStack />
       <Footer />

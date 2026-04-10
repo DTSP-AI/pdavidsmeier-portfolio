@@ -37,3 +37,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large video files — only track the two we display
+public/video_clips/*
+!public/video_clips/Med-Prompt-Inject.mp4
+!public/video_clips/KG Example-highlight.mp4
