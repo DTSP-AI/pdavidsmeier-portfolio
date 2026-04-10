@@ -11,7 +11,7 @@ export default function Footer() {
             combatperfomrfit@gmail.com
           </a>
           <a
-            href="https://www.linkedin.com/in/pdavidsmeier/"
+            href="https://www.linkedin.com/in/pete-davidsmeier-ai-solutions"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[#0A66C2] transition-colors"
