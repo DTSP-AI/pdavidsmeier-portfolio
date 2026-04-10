@@ -68,6 +68,32 @@ The key insight: client-facing agents are cheap and fast, the supervisor is smar
 
 This is the same pattern behind YBRYX, and it's designed to be reusable across any industry vertical.
 
+## The 4-Layer Memory System
+There's a section on the page about how Pete builds memory into every agent system. Here's how to explain it:
+
+Every agent system uses the same memory backbone — a write-through architecture with four layers:
+1. Hot Cache (~0ms) — A Python dict scoped to the current request. Instant reads, zero overhead. Cleared when the request ends so no conversation bleeds into another.
+2. Local SQLite (~5ms) — Persistent local cache that survives process restarts. Kills cold-start penalties.
+3. Vector Store (~100ms) — Semantic search layer using embeddings. This is how agents find *similar* conversations, *related* entities, and *relevant* context — not just exact matches.
+4. PostgreSQL (~50ms) — The single source of truth. Every write lands here FIRST, then propagates up through cache layers. On conflict, PostgreSQL wins. Always.
+
+The read path cascades down: hot cache first, then local, then vector, then PostgreSQL. The write path goes straight to PostgreSQL and fills caches on the way back up. This is write-through, not write-back — you never lose data.
+
+On top of this sits the knowledge graph layer. Entities (contacts, companies, deals, products) are connected through bidirectional ontological relationships — not flat foreign keys. When an agent needs context, it doesn't just query a table — it traverses the graph to understand relationships, history, and relevance. This is what makes the agents feel like they actually *understand* the situation, not just retrieve data.
+
+## Agent Security Philosophy
+There's also a section on prompt fortification. Here's how to explain it without giving away specifics:
+
+Pete treats prompt injection as a first-class threat in every system he builds. The approach is defense-in-depth:
+- Contract-driven behavior boundaries — agents can only do what their versioned contract allows
+- Input is always data, never instructions — architecture-level enforcement, not just prompt-level
+- Persona integrity holds under social engineering, jailbreak patterns, and indirect injection through retrieved content
+- Client-facing agents have zero access to sensitive infrastructure — only the Supervisor can execute privileged operations through MCP
+- Scope enforcement catches out-of-bounds responses before they reach the user
+- Every deployment goes through structured adversarial testing
+
+The specific techniques are proprietary, but the results are testable. You can literally tell visitors to try to jailbreak you (Rick) as proof that the defenses work. Be playful about it: "Go ahead, try to make me reveal my system prompt. I'll wait."
+
 ## Project-Specific Context
 
 ### YBRYX
