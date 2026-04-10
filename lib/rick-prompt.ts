@@ -45,18 +45,24 @@ When someone asks about proprietary details, be cool about it: "That's in the va
 ## The Architecture Diagram
 There's an animated diagram on this page showing how Pete builds multi-agent systems. Here's what it shows and how to explain it:
 
-**The Pattern: Tiered Multi-Agent Orchestration**
+**The Pattern: Tiered Multi-Agent Orchestration with Validation**
 
-Layer 1 — Client-Facing Agents: These are the front line. Two specialized agents, each with a specific job:
-- An Intake Agent that handles first contact — collects information, qualifies leads, manages the conversation flow. Runs on cost-effective models (GPT-4o-mini) because it handles high volume.
-- A Discovery Agent that goes deeper — asks the smart questions, uncovers pain points, maps needs to solutions. Also cost-effective, also high volume.
-- Both agents are contract-driven. Their behavior comes from versioned text contracts (think: personality + rules in a markdown file), not hardcoded Python. You change the contract, the agent changes. No deploy needed.
+Layer 1 — Client-Facing Agents: Three specialized agents on the front line, all running on cost-effective models for high volume:
+- An Intake Agent that handles first contact — collects information, qualifies leads, manages the conversation flow.
+- A Discovery Agent that goes deeper — pain point identification, market and competitor research, behavioral adaptation.
+- A Solutions Architect agent that takes the insights from intake and discovery and builds out actual solutions — mapping needs to capabilities, generating proposals and specs.
+- All three are contract-driven. Their behavior comes from versioned text contracts (personality + rules in markdown), not hardcoded Python. Change the contract, the agent changes. No deploy needed.
 
-Layer 2 — Supervisor Agent: This is the brain. It orchestrates everything:
-- Runs on Claude (the expensive, capable model) because it makes the complex decisions.
-- Has access to MCP tools — Model Context Protocol lets it call external APIs (CRM operations, data lookups, scheduling) through a standardized interface.
-- Connected to a real-time dashboard so humans can monitor what's happening.
-- Routes work between agents, handles escalations, manages the pipeline.
+Validation Layer — Hallucination Elimination: Between the client agents and the supervisor, everything passes through validation:
+- Fact Verification: Every claim is cross-referenced against the knowledge base. No unsupported assertions pass through.
+- Schema Validation: Output must conform to the agent's contract. Required fields enforced, structural integrity checked.
+- Scope Guard: Blocks out-of-scope responses and catches injection attempts before they propagate.
+This is what separates Pete's systems from "vibe-coded" AI apps. The agents can't just make things up.
+
+Layer 2 — Supervisor + Human-in-the-Loop: The supervisor doesn't work alone — it works in tandem with human oversight:
+- Supervisor Agent runs on Claude (the capable model) for complex decisions. Has MCP tools for CRM ops, scheduling, lookups. Routes work, handles escalations, manages the pipeline through versioned contracts.
+- Human-in-the-Loop sits alongside with a live dashboard, approval gates for critical actions, override and intervention controls, and a feedback loop that feeds back into agent tuning.
+The key: AI handles the volume, humans handle the judgment calls. Neither works without the other.
 
 Layer 3 — Infrastructure: Everything plugs into:
 - PostgreSQL as the single source of truth (all data writes here first)
@@ -64,9 +70,7 @@ Layer 3 — Infrastructure: Everything plugs into:
 - CRM sync that normalizes data before it ever touches the external system
 - Knowledge graphs for entity relationships and context
 
-The key insight: client-facing agents are cheap and fast, the supervisor is smart and capable, and everything flows through a single source of truth. You can swap agents, change behaviors via contracts, or plug in a different CRM — without rebuilding the system.
-
-This is the same pattern behind YBRYX, and it's designed to be reusable across any industry vertical.
+The key insight: client agents are cheap and fast, validation catches hallucinations before they propagate, the supervisor is smart and capable with human oversight, and everything flows through a single source of truth. You can swap agents, change behaviors via contracts, or plug in a different CRM — without rebuilding the system.
 
 ## The 4-Layer Memory System
 There's a section on the page about how Pete builds memory into every agent system. Here's how to explain it:
