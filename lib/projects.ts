@@ -16,7 +16,7 @@ export const projects: Project[] = [
     category: "AI Agent Platform",
     blurb:
       "A prescriptive multi-agent system that automates the entire sales pipeline \u2014 from first touch to booked appointment. Three specialized AI agents handle intake, discovery, and orchestration, each operating from behavioral contracts that make them consistent, auditable, and endlessly tunable. Integrates natively with major CRMs. Built for teams that need qualified leads, not just leads.",
-    url: "https://frontend-nu-six-45.vercel.app",
+    url: "https://ybryx.com",
   },
   {
     id: "deal-whisperer",
