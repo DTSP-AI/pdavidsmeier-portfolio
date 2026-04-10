@@ -61,7 +61,7 @@ export const projects: Project[] = [
     category: "Lead Qualification / Compliance",
     blurb:
       "A conversational AI intake system for bundled home services \u2014 solar, water treatment, roofing \u2014 that qualifies homeowners in real-time. Handles service-specific eligibility (credit, ownership, utility spend), multi-language support, and regulatory compliance including TCPA and Florida solar disclosures. Qualified leads route directly to CRM with normalized data. Built to handle the messiness of real consumer conversations.",
-    url: "https://haven-frontend-zeta.vercel.app",
+    url: "https://havenmyhome.com",
   },
 ];
 
