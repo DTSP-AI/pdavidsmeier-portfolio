@@ -44,7 +44,7 @@ export default function Header() {
         >
           {/* Profile photo placeholder */}
           <div className="w-28 h-28 rounded-full bg-gradient-to-br from-[#0A66C2] to-[#004182] flex items-center justify-center text-white text-3xl font-bold shrink-0">
-            PS
+            PD
           </div>
 
           <div className="text-center md:text-left">
