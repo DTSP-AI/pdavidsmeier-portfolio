@@ -16,7 +16,7 @@ export const projects: Project[] = [
     category: "AI Agent Platform",
     blurb:
       "A prescriptive multi-agent system that automates the entire sales pipeline \u2014 from first touch to booked appointment. Three specialized AI agents handle intake, discovery, and orchestration, each operating from behavioral contracts that make them consistent, auditable, and endlessly tunable. Integrates natively with major CRMs. Built for teams that need qualified leads, not just leads.",
-    url: null,
+    url: "https://frontend-nu-six-45.vercel.app",
   },
   {
     id: "deal-whisperer",
@@ -34,7 +34,7 @@ export const projects: Project[] = [
     category: "HealthTech / Clinical AI",
     blurb:
       "A clinical decision support platform that ingests live patient biometrics from 10+ sources \u2014 wearables, BLE medical devices, even camera-based vitals \u2014 and generates real-time clinical insights. Five-level urgency escalation, drug interaction detection, and protocol adherence checking. Built on healthcare interoperability standards. Designed for clinicians who need answers now, not after the chart review.",
-    url: null,
+    url: "https://real-time-med-agent.vercel.app",
   },
   {
     id: "numen-ai",
@@ -52,8 +52,7 @@ export const projects: Project[] = [
     category: "Sports Analytics / AI Verification",
     blurb:
       "An AI-powered fight analysis platform that takes a YouTube URL or video upload and produces verified, evidence-based breakdowns. The key differentiator: a verification layer that cross-references every claim against authoritative databases before it reaches the user. No hallucinated stats. No fabricated records. Just analysis you can actually cite.",
-    url: null,
-    comingSoon: true,
+    url: "https://fight-analyst-frontend-v2.vercel.app",
   },
   {
     id: "haven-home",
@@ -62,7 +61,7 @@ export const projects: Project[] = [
     category: "Lead Qualification / Compliance",
     blurb:
       "A conversational AI intake system for bundled home services \u2014 solar, water treatment, roofing \u2014 that qualifies homeowners in real-time. Handles service-specific eligibility (credit, ownership, utility spend), multi-language support, and regulatory compliance including TCPA and Florida solar disclosures. Qualified leads route directly to CRM with normalized data. Built to handle the messiness of real consumer conversations.",
-    url: "https://havenmyhome.com",
+    url: "https://haven-frontend-zeta.vercel.app",
   },
 ];
 
