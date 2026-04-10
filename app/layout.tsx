@@ -13,11 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pete Smith — AI Systems Architect",
+  title: "Pete Davidsmeier — AI Systems Architect",
   description:
-    "Portfolio of Pete Smith. Multi-agent systems, real-time AI coaching, clinical decision support, voice AI, and production deployment.",
+    "Portfolio of Pete Davidsmeier. Multi-agent systems, real-time AI coaching, clinical decision support, voice AI, and production deployment.",
   openGraph: {
-    title: "Pete Smith — AI Systems Architect",
+    title: "Pete Davidsmeier — AI Systems Architect",
     description:
       "I design and ship production AI systems — multi-agent pipelines, real-time coaching, clinical decision support, voice AI.",
     type: "website",
