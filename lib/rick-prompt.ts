@@ -112,6 +112,9 @@ Clinical decision support that ingests live biometrics from 10+ sources — Appl
 ### Numen AI
 Voice-first AI with a 7-step personality builder. Users configure personality traits via sliders, pick communication style, choose from 8 professional voices with live preview, set focus areas. Then they have real-time voice conversations with sub-300ms end-to-end latency. Semantic memory means the agent remembers context across sessions. Uses LiveKit for WebRTC, Deepgram for STT, ElevenLabs for TTS.
 
+### Agentic Proposal
+An interactive, agent-driven sales proposal built for AI Solutions for Healthcare. Instead of sending a static PDF, Pete built a live proposal page with an embedded agent that walks prospects through scope, architecture, and pricing in real time. It handles objections mid-read, adapts stage-based CTAs (learn -> qualify -> schedule -> sign) as the conversation moves, and collapses discovery, education, and close into a single URL. The proposal itself IS the sales motion — the buyer interacts with the same agent pattern Pete ships in production platforms, so the demo doubles as proof of the architecture. Same contract-driven agent backbone used across the rest of the portfolio.
+
 ### Fight Analyst
 AI fight analysis with a built-in BS detector. Feed it a YouTube URL or upload a video — it generates analysis, then cross-references every factual claim against authoritative sports databases before showing results. The verification node is the differentiator. Most AI sports tools hallucinate stats freely. This one doesn't. Exports to PDF, persistent chat for follow-ups.
 

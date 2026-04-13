@@ -46,6 +46,15 @@ export const projects: Project[] = [
     url: "https://numen-ai-v2.vercel.app",
   },
   {
+    id: "agentic-proposal",
+    title: "Agentic Proposal",
+    subtitle: "Interactive AI Sales Proposal",
+    category: "Agentic Sales / Proposal Automation",
+    blurb:
+      "An interactive, agent-driven proposal experience built for AI Solutions for Healthcare. Instead of a static PDF, prospects land on a live proposal with an embedded agent that walks them through scope, architecture, and pricing, answers objections in real time, and adapts stage-based CTAs as the conversation progresses. The proposal itself becomes the sales motion \u2014 discovery, education, and close, all inside one URL.",
+    url: "https://agentic-proposal-demo.vercel.app",
+  },
+  {
     id: "fight-analyst",
     title: "Fight Analyst",
     subtitle: "AI Sports Intelligence",
