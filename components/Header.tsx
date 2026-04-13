@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const socials = [
   {
@@ -34,27 +36,36 @@ const socials = [
 
 export default function Header() {
   return (
-    <section className="w-full bg-white border-b border-gray-200">
+    <section className="w-full bg-white dark:bg-neutral-950 border-b border-gray-200 dark:border-neutral-800 relative">
       <div className="max-w-4xl mx-auto px-6 py-12 md:py-16">
+        <div className="absolute top-4 right-4">
+          <ThemeToggle />
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="flex flex-col md:flex-row items-center md:items-start gap-6"
         >
-          {/* Profile photo placeholder */}
-          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-[#0A66C2] to-[#004182] flex items-center justify-center text-white text-3xl font-bold shrink-0">
-            PD
+          <div className="relative w-28 h-28 rounded-full overflow-hidden ring-2 ring-[#0A66C2] shrink-0">
+            <Image
+              src="/profile_pic/Pete_Headshot.jpg"
+              alt="Pete Davidsmeier"
+              fill
+              sizes="112px"
+              className="object-cover"
+              priority
+            />
           </div>
 
           <div className="text-center md:text-left">
-            <h1 className="text-3xl md:text-4xl font-bold text-[#191919]">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#191919] dark:text-white">
               Pete Davidsmeier
             </h1>
-            <p className="text-lg text-[#0A66C2] font-medium mt-1">
+            <p className="text-lg text-[#0A66C2] dark:text-[#4A9EFF] font-medium mt-1">
               AI Systems Architect
             </p>
-            <p className="text-[#666] mt-3 max-w-xl leading-relaxed">
+            <p className="text-[#666] dark:text-neutral-400 mt-3 max-w-xl leading-relaxed">
               I design and ship production AI systems — multi-agent pipelines,
               real-time coaching, clinical decision support, voice AI. Full
               stack, full lifecycle, from architecture to deployment.
