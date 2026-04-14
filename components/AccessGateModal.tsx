@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Project } from "@/lib/projects";
+import { getNcndaTemplate } from "@/lib/ncnda-templates";
 
 type Role = "employer" | "recruiter" | "vc";
 type Step = "role" | "contact" | "sign" | "success";
@@ -84,6 +85,14 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
     if (role === "employer") return "Company / Employer";
     return "Company";
   }, [role]);
+
+  // Resolve the disclosing-party NDA for the clicked project. Gated
+  // projects must declare an ndaKey in lib/projects.ts; fall back to DTSP
+  // so the modal still renders for any misconfigured case.
+  const ndaMeta = useMemo(() => {
+    const key = project?.ndaKey ?? "dtsp";
+    return getNcndaTemplate(key).metadata;
+  }, [project]);
 
   const contactValid =
     name.trim().length >= 2 &&
@@ -199,7 +208,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                 <div className="space-y-3">
                   <p className="text-sm text-[#444]">
                     This project contains proprietary architecture, prompts, and
-                    IP owned by DTSP Agentic Technologies LLC. Before viewing,
+                    IP owned by {ndaMeta.disclosingPartyName}. Before viewing,
                     identify your role and execute a short NCNDA.
                   </p>
                   <div className="space-y-2 pt-1">
@@ -273,30 +282,26 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                     <div className="font-bold text-[#191919] mb-2">
                       Non-Disclosure &amp; Confidentiality Agreement (summary)
                     </div>
-                    <p className="mb-2">
-                      By signing, <strong>{name || "Recipient"}</strong> on behalf
-                      of <strong>{company || "—"}</strong> agrees to hold all
-                      Confidential Information of DTSP Agentic Technologies LLC in
-                      strict confidence, use it solely to evaluate a potential
-                      engagement, and refrain from disclosing, copying, reverse
-                      engineering, or feeding it into any third-party AI, ML, or
-                      training system without prior written consent.
-                    </p>
-                    <p className="mb-2">
-                      Confidential Information includes source code,
-                      multi-agent architectures, LangGraph definitions, agent
-                      contracts, system prompts, datasets, knowledge graphs,
-                      product designs, financials, and all derivatives.
-                      Obligations survive for five (5) years, and in perpetuity
-                      for trade secrets. Governed by Florida law, venue in
-                      Miami-Dade County, jury trial waived.
-                    </p>
-                    <p className="mb-0 text-[#666]">
-                      Full agreement is captured and stored with your
-                      signature. Typing your name below constitutes an
-                      electronic signature under 15 U.S.C. § 7001 (E-SIGN) and
-                      Florida law.
-                    </p>
+                    {ndaMeta.summaryParagraphs.map((para, i) => {
+                      const isLast = i === ndaMeta.summaryParagraphs.length - 1;
+                      const chunks = para.split(/(\{\{NAME\}\}|\{\{ENTITY\}\})/);
+                      return (
+                        <p
+                          key={i}
+                          className={isLast ? "mb-0 text-[#666]" : "mb-2"}
+                        >
+                          {chunks.map((chunk, j) => {
+                            if (chunk === "{{NAME}}") {
+                              return <strong key={j}>{name || "Recipient"}</strong>;
+                            }
+                            if (chunk === "{{ENTITY}}") {
+                              return <strong key={j}>{company || "—"}</strong>;
+                            }
+                            return <span key={j}>{chunk}</span>;
+                          })}
+                        </p>
+                      );
+                    })}
                   </div>
 
                   <label className="flex items-start gap-2 text-sm text-[#333] cursor-pointer">
@@ -372,7 +377,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
             {/* Footer */}
             <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between gap-3">
               <div className="text-[10px] text-[#999]">
-                DTSP Agentic Technologies LLC · Confidential
+                {ndaMeta.footerLine}
               </div>
               <div className="flex items-center gap-2">
                 {step === "contact" && (
