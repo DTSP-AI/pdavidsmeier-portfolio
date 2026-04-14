@@ -1,23 +1,20 @@
-import type { NcndaTemplate } from "./types";
+// NCNDA template used by the portfolio access gate.
+// Mirrors NDCA_DTSP_Agentic_Technologies_LLC.md. Do not edit the body here
+// without syncing the source document.
 
-// DTSP Agentic Technologies LLC one-way NDA.
-// Mirrors NDCA_DTSP_Agentic_Technologies_LLC.md in the repo root.
-// Do not edit the body here without syncing the source document.
+export const NCNDA_VERSION = "2026-04-v1";
 
-export const dtspTemplate: NcndaTemplate = {
-  key: "dtsp",
-  metadata: {
-    disclosingPartyName: "DTSP Agentic Technologies LLC",
-    entityDescriptor: "a Florida limited liability company",
-    version: "2026-04-v1",
-    summaryParagraphs: [
-      "By signing, {{NAME}} on behalf of {{ENTITY}} agrees to hold all Confidential Information of DTSP Agentic Technologies LLC in strict confidence, use it solely to evaluate a potential engagement, and refrain from disclosing, copying, reverse engineering, or feeding it into any third-party AI, ML, or training system without prior written consent.",
-      "Confidential Information includes source code, multi-agent architectures, LangGraph definitions, agent contracts, system prompts, datasets, knowledge graphs, product designs, financials, and all derivatives. Obligations survive for five (5) years, and in perpetuity for trade secrets. Governed by Florida law, venue in Miami-Dade County, jury trial waived.",
-      "Full agreement is captured and stored with your signature. Typing your name below constitutes an electronic signature under 15 U.S.C. § 7001 (E-SIGN) and Florida law.",
-    ],
-    footerLine: "DTSP Agentic Technologies LLC · Confidential",
-  },
-  body: `# NON-DISCLOSURE AND CONFIDENTIALITY AGREEMENT (NDCA)
+export interface NcndaFillInput {
+  effectiveDate: string;
+  recipientName: string;
+  recipientEntity: string;
+  recipientRole: string;
+  recipientEmail: string;
+  recipientPhone: string;
+  gatedProjectTitles: string[];
+}
+
+export const NCNDA_BODY_TEMPLATE = `# NON-DISCLOSURE AND CONFIDENTIALITY AGREEMENT (NDCA)
 
 **Effective Date:** {{EFFECTIVE_DATE}}
 
@@ -135,5 +132,17 @@ By: {{RECIPIENT_NAME}} (electronically signed)
 Entity: {{RECIPIENT_ENTITY}}
 Role: {{RECIPIENT_ROLE}}
 Date: {{EFFECTIVE_DATE}}
-`,
-};
+`;
+
+export function fillNcnda(input: NcndaFillInput): string {
+  const exhibitA = input.gatedProjectTitles
+    .map((title, i) => `${i + 1}. ${title}`)
+    .join("\n");
+  return NCNDA_BODY_TEMPLATE.replaceAll("{{EFFECTIVE_DATE}}", input.effectiveDate)
+    .replaceAll("{{RECIPIENT_NAME}}", input.recipientName)
+    .replaceAll("{{RECIPIENT_ENTITY}}", input.recipientEntity)
+    .replaceAll("{{RECIPIENT_ROLE}}", input.recipientRole)
+    .replaceAll("{{RECIPIENT_EMAIL}}", input.recipientEmail)
+    .replaceAll("{{RECIPIENT_PHONE}}", input.recipientPhone)
+    .replaceAll("{{EXHIBIT_A_PROJECTS}}", exhibitA);
+}

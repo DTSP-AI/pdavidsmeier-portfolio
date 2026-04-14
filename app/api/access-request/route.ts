@@ -1,18 +1,16 @@
 import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
 import { projects } from "@/lib/projects";
-import { fillNcnda, getNcndaTemplate } from "@/lib/ncnda-templates";
+import { fillNcnda, NCNDA_VERSION } from "@/lib/ncnda-template";
 import {
   persistAccessRequest,
   type AccessRequestRecord,
 } from "@/lib/access-storage";
 import { mintNcndaToken } from "@/lib/ncnda-token";
 
-// One signature only unlocks gated projects sharing the same disclosing
-// party (ndaKey). A signer viewing Deal Whisperer signs the DealWhisper Inc.
-// NDA and only receives tokens for DealWhisper-owned projects; a signer
-// viewing a DTSP-owned project signs the DTSP NDA and only receives tokens
-// for DTSP-owned projects. Different parties require separate signatures.
+// One signature unlocks every gated project — that's the legal scope of the
+// NCNDA. Any project flagged gated:true in lib/projects.ts is granted by
+// every successful sign, regardless of which project the user clicked first.
 const TOKEN_TTL_SECONDS = 60 * 60 * 24 * 30; // 30 days
 
 export const maxDuration = 30;
@@ -89,34 +87,23 @@ export async function POST(req: Request) {
     );
   }
 
-  // Signing the NCNDA grants access to every gated project sharing the
-  // same disclosing party (ndaKey) as whichever project the user clicked.
-  // We do NOT mint tokens spanning NDA keys: binding a recipient under
-  // DealWhisper Inc.'s NDA cannot grant access to DTSP-owned projects and
-  // vice versa.
-  if (projectIds.length === 0) {
+  // Signing the NCNDA grants access to every gated project, not just the
+  // one the user clicked. The legal scope of the document covers all of
+  // Company's Confidential Information, so we mint a token covering all.
+  const allGated = projects.filter((p) => p.gated);
+  if (allGated.length === 0) {
     return NextResponse.json(
-      { error: "projectIds is required" },
-      { status: 400 }
+      { error: "No gated projects configured" },
+      { status: 500 }
     );
   }
-  const clicked = projects.find(
-    (p) => p.id === projectIds[0] && p.gated && p.ndaKey
+  const requestedGated = allGated.filter(
+    (p) => projectIds.length === 0 || projectIds.includes(p.id)
   );
-  if (!clicked || !clicked.ndaKey) {
+  if (requestedGated.length === 0) {
     return NextResponse.json(
       { error: "Requested project is not gated" },
       { status: 400 }
-    );
-  }
-  const activeNdaKey = clicked.ndaKey;
-  const unlockable = projects.filter(
-    (p) => p.gated && p.ndaKey === activeNdaKey
-  );
-  if (unlockable.length === 0) {
-    return NextResponse.json(
-      { error: "No gated projects configured for this NDA" },
-      { status: 500 }
     );
   }
 
@@ -131,15 +118,14 @@ export async function POST(req: Request) {
         ? "Recruiter"
         : "Venture Capital / Investor";
 
-  const activeTemplate = getNcndaTemplate(activeNdaKey);
-  const renderedNcnda = fillNcnda(activeNdaKey, {
+  const renderedNcnda = fillNcnda({
     effectiveDate: createdAt.slice(0, 10),
     recipientName: name,
     recipientEntity: company,
     recipientRole: roleLabel,
     recipientEmail: email,
     recipientPhone: phone,
-    gatedProjectTitles: unlockable.map((p) => `${p.title} — ${p.subtitle}`),
+    gatedProjectTitles: allGated.map((p) => `${p.title} — ${p.subtitle}`),
   });
 
   const ip =
@@ -151,13 +137,13 @@ export async function POST(req: Request) {
   const record: AccessRequestRecord = {
     id,
     createdAt,
-    ncndaVersion: activeTemplate.metadata.version,
+    ncndaVersion: NCNDA_VERSION,
     role: role as AccessRequestRecord["role"],
     name,
     email,
     phone,
     company,
-    gatedProjects: unlockable.map((p) => p.id),
+    gatedProjects: allGated.map((p) => p.id),
     signature: {
       typedName: typedSignature,
       agreedAt: createdAt,
@@ -182,14 +168,14 @@ export async function POST(req: Request) {
       {
         id,
         exp: expSeconds,
-        projects: unlockable.map((p) => p.id),
+        projects: allGated.map((p) => p.id),
       },
       secret
     );
     return NextResponse.json({
       ok: true,
       id,
-      unlockedProjects: unlockable.map((p) => {
+      unlockedProjects: allGated.map((p) => {
         const sep = p.url && p.url.includes("?") ? "&" : "?";
         return {
           id: p.id,
