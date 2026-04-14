@@ -7,9 +7,15 @@ interface ProjectCardProps {
   project: Project;
   index: number;
   onLearnMore: (projectTitle: string) => void;
+  onRequestAccess: (project: Project) => void;
 }
 
-export default function ProjectCard({ project, index, onLearnMore }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  index,
+  onLearnMore,
+  onRequestAccess,
+}: ProjectCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -47,6 +53,13 @@ export default function ProjectCard({ project, index, onLearnMore }: ProjectCard
         </button>
         {project.comingSoon ? (
           <span className="text-sm text-[#999]">Coming Soon</span>
+        ) : project.gated ? (
+          <button
+            onClick={() => onRequestAccess(project)}
+            className="text-sm font-medium text-[#0A66C2] hover:underline cursor-pointer inline-flex items-center gap-1"
+          >
+            <span aria-hidden>🔒</span> Request Access &rarr;
+          </button>
         ) : project.url ? (
           <a
             href={project.url}

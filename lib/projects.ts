@@ -6,6 +6,7 @@ export interface Project {
   blurb: string;
   url: string | null;
   comingSoon?: boolean;
+  gated?: boolean;
 }
 
 export const projects: Project[] = [
@@ -26,6 +27,7 @@ export const projects: Project[] = [
     blurb:
       "An invisible AI co-pilot that joins sales calls and delivers coaching cards in under 2.5 seconds. Pre-call, it researches the prospect, their company, tech stack, and recent moves. During the call, it adapts to the conversation and the buyer\u2019s behavioral profile. Every meeting makes the next one smarter. The rep gets better. The prospect never knows it\u2019s there.",
     url: "https://deal-whisper.com",
+    gated: true,
   },
   {
     id: "realtime-med",
@@ -35,6 +37,7 @@ export const projects: Project[] = [
     blurb:
       "A clinical decision support platform that ingests live patient biometrics from 10+ sources \u2014 wearables, BLE medical devices, even camera-based vitals \u2014 and generates real-time clinical insights. Five-level urgency escalation, drug interaction detection, and protocol adherence checking. Built on healthcare interoperability standards. Designed for clinicians who need answers now, not after the chart review.",
     url: "https://real-time-med-agent.vercel.app",
+    gated: true,
   },
   {
     id: "numen-ai",
