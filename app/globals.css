@@ -41,3 +41,6 @@ html {
   background: #d1d5db;
   border-radius: 2px;
 }
+.dark .overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #525252;
+}

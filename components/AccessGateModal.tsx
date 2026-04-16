@@ -149,24 +149,24 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"
+            className="bg-white dark:bg-neutral-950 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="px-6 py-5 border-b border-gray-200 flex items-start justify-between">
+            <div className="px-6 py-5 border-b border-gray-200 dark:border-neutral-800 flex items-start justify-between">
               <div>
-                <div className="text-xs font-medium uppercase tracking-wider text-[#0A66C2]">
+                <div className="text-xs font-medium uppercase tracking-wider text-[#0A66C2] dark:text-[#4A9EFF]">
                   Restricted Access · NCNDA Required
                 </div>
-                <h2 className="text-xl font-bold text-[#191919] mt-1">
+                <h2 className="text-xl font-bold text-[#191919] dark:text-white mt-1">
                   {project.title}
                 </h2>
-                <p className="text-sm text-[#666] mt-0.5">{project.subtitle}</p>
+                <p className="text-sm text-[#666] dark:text-neutral-400 mt-0.5">{project.subtitle}</p>
               </div>
               <button
                 onClick={onClose}
                 aria-label="Close"
-                className="text-[#666] hover:text-[#191919] text-2xl leading-none"
+                className="text-[#666] dark:text-neutral-400 hover:text-[#191919] dark:hover:text-white text-2xl leading-none"
               >
                 ×
               </button>
@@ -174,7 +174,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
 
             {/* Stepper */}
             <div className="px-6 pt-4 pb-2">
-              <div className="flex items-center gap-2 text-xs text-[#666]">
+              <div className="flex items-center gap-2 text-xs text-[#666] dark:text-neutral-400">
                 <StepDot label="Role" active={step === "role"} done={step !== "role"} />
                 <StepLine />
                 <StepDot
@@ -197,7 +197,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
             <div className="px-6 py-4 overflow-y-auto flex-1">
               {step === "role" && (
                 <div className="space-y-3">
-                  <p className="text-sm text-[#444]">
+                  <p className="text-sm text-[#444] dark:text-neutral-300">
                     This project contains proprietary architecture, prompts, and
                     IP owned by DTSP Agentic Technologies LLC. Before viewing,
                     identify your role and execute a short NCNDA.
@@ -210,10 +210,10 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                           setRole(r.key);
                           setStep("contact");
                         }}
-                        className="w-full text-left p-4 rounded-lg border border-gray-200 hover:border-[#0A66C2] hover:bg-[#F4F8FD] transition-colors cursor-pointer"
+                        className="w-full text-left p-4 rounded-lg border border-gray-200 dark:border-neutral-700 hover:border-[#0A66C2] hover:bg-[#F4F8FD] dark:hover:bg-neutral-800 transition-colors cursor-pointer"
                       >
-                        <div className="font-semibold text-[#191919]">{r.label}</div>
-                        <div className="text-xs text-[#666] mt-0.5">{r.blurb}</div>
+                        <div className="font-semibold text-[#191919] dark:text-white">{r.label}</div>
+                        <div className="text-xs text-[#666] dark:text-neutral-400 mt-0.5">{r.blurb}</div>
                       </button>
                     ))}
                   </div>
@@ -228,7 +228,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Jane Doe"
-                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-[#0A66C2] focus:outline-none focus:ring-1 focus:ring-[#0A66C2] text-sm"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-[#191919] dark:text-neutral-100 focus:border-[#0A66C2] focus:outline-none focus:ring-1 focus:ring-[#0A66C2] text-sm"
                     />
                   </Field>
                   <Field label="Work Email" required>
@@ -237,7 +237,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="jane@acme.com"
-                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-[#0A66C2] focus:outline-none focus:ring-1 focus:ring-[#0A66C2] text-sm"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-[#191919] dark:text-neutral-100 focus:border-[#0A66C2] focus:outline-none focus:ring-1 focus:ring-[#0A66C2] text-sm"
                     />
                   </Field>
                   <Field label="Phone" required>
@@ -246,7 +246,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="(212) 555-0091"
-                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-[#0A66C2] focus:outline-none focus:ring-1 focus:ring-[#0A66C2] text-sm"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-[#191919] dark:text-neutral-100 focus:border-[#0A66C2] focus:outline-none focus:ring-1 focus:ring-[#0A66C2] text-sm"
                     />
                   </Field>
                   <Field label={companyLabel} required>
@@ -261,7 +261,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                             ? "Acme Search Group"
                             : "Acme, Inc."
                       }
-                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-[#0A66C2] focus:outline-none focus:ring-1 focus:ring-[#0A66C2] text-sm"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-[#191919] dark:text-neutral-100 focus:border-[#0A66C2] focus:outline-none focus:ring-1 focus:ring-[#0A66C2] text-sm"
                     />
                   </Field>
                 </div>
@@ -269,8 +269,8 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
 
               {step === "sign" && (
                 <div className="space-y-4">
-                  <div className="rounded-lg border border-gray-200 bg-[#FAFAFA] p-4 max-h-64 overflow-y-auto text-xs text-[#333] leading-relaxed">
-                    <div className="font-bold text-[#191919] mb-2">
+                  <div className="rounded-lg border border-gray-200 dark:border-neutral-700 bg-[#FAFAFA] dark:bg-neutral-900 p-4 max-h-64 overflow-y-auto text-xs text-[#333] dark:text-neutral-300 leading-relaxed">
+                    <div className="font-bold text-[#191919] dark:text-white mb-2">
                       Non-Disclosure &amp; Confidentiality Agreement (summary)
                     </div>
                     <p className="mb-2">
@@ -291,7 +291,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                       for trade secrets. Governed by Florida law, venue in
                       Miami-Dade County, jury trial waived.
                     </p>
-                    <p className="mb-0 text-[#666]">
+                    <p className="mb-0 text-[#666] dark:text-neutral-400">
                       Full agreement is captured and stored with your
                       signature. Typing your name below constitutes an
                       electronic signature under 15 U.S.C. § 7001 (E-SIGN) and
@@ -299,7 +299,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                     </p>
                   </div>
 
-                  <label className="flex items-start gap-2 text-sm text-[#333] cursor-pointer">
+                  <label className="flex items-start gap-2 text-sm text-[#333] dark:text-neutral-300 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={agreed}
@@ -318,7 +318,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                       value={typedSignature}
                       onChange={(e) => setTypedSignature(e.target.value)}
                       placeholder={name || "Full legal name"}
-                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-[#0A66C2] focus:outline-none focus:ring-1 focus:ring-[#0A66C2] text-sm font-serif italic"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-[#191919] dark:text-neutral-100 focus:border-[#0A66C2] focus:outline-none focus:ring-1 focus:ring-[#0A66C2] text-sm font-serif italic"
                     />
                   </Field>
                   {typedSignature && !signatureMatches && (
@@ -332,11 +332,11 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
 
               {step === "success" && (
                 <div className="space-y-4">
-                  <div className="rounded-lg border border-green-200 bg-green-50 p-4">
-                    <div className="font-semibold text-green-900">
+                  <div className="rounded-lg border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950 p-4">
+                    <div className="font-semibold text-green-900 dark:text-green-300">
                       NCNDA executed. Access unlocked.
                     </div>
-                    <p className="text-xs text-green-800 mt-1">
+                    <p className="text-xs text-green-800 dark:text-green-400 mt-1">
                       A signed copy has been recorded. You now have access to
                       the live application.
                     </p>
@@ -348,9 +348,9 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                         href={u.url ?? "#"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block rounded-lg border border-gray-200 hover:border-[#0A66C2] hover:bg-[#F4F8FD] p-4 transition-colors"
+                        className="block rounded-lg border border-gray-200 dark:border-neutral-700 hover:border-[#0A66C2] hover:bg-[#F4F8FD] dark:hover:bg-neutral-800 p-4 transition-colors"
                       >
-                        <div className="font-semibold text-[#191919]">
+                        <div className="font-semibold text-[#191919] dark:text-white">
                           {u.title}
                         </div>
                         <div className="text-xs text-[#0A66C2] mt-0.5 break-all">
@@ -370,8 +370,8 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between gap-3">
-              <div className="text-[10px] text-[#999]">
+            <div className="px-6 py-4 border-t border-gray-200 dark:border-neutral-800 flex items-center justify-between gap-3">
+              <div className="text-[10px] text-[#999] dark:text-neutral-500">
                 DTSP Agentic Technologies LLC · Confidential
               </div>
               <div className="flex items-center gap-2">
@@ -379,7 +379,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                   <>
                     <button
                       onClick={() => setStep("role")}
-                      className="px-4 py-2 text-sm rounded-lg border border-gray-300 text-[#444] hover:bg-gray-50"
+                      className="px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-neutral-700 text-[#444] dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-800"
                     >
                       Back
                     </button>
@@ -397,7 +397,7 @@ export default function AccessGateModal({ open, project, onClose }: AccessGateMo
                     <button
                       onClick={() => setStep("contact")}
                       disabled={submitting}
-                      className="px-4 py-2 text-sm rounded-lg border border-gray-300 text-[#444] hover:bg-gray-50"
+                      className="px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-neutral-700 text-[#444] dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-800"
                     >
                       Back
                     </button>
@@ -440,16 +440,16 @@ function StepDot({
     <div className="flex items-center gap-1.5">
       <div
         className={`h-2 w-2 rounded-full ${
-          done ? "bg-[#0A66C2]" : active ? "bg-[#0A66C2]" : "bg-gray-300"
+          done ? "bg-[#0A66C2]" : active ? "bg-[#0A66C2]" : "bg-gray-300 dark:bg-neutral-600"
         }`}
       />
-      <span className={active ? "text-[#191919] font-medium" : ""}>{label}</span>
+      <span className={active ? "text-[#191919] dark:text-white font-medium" : ""}>{label}</span>
     </div>
   );
 }
 
 function StepLine() {
-  return <div className="h-px w-6 bg-gray-200" />;
+  return <div className="h-px w-6 bg-gray-200 dark:bg-neutral-700" />;
 }
 
 function Field({
@@ -463,7 +463,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <div className="text-xs font-medium text-[#444] mb-1">
+      <div className="text-xs font-medium text-[#444] dark:text-neutral-300 mb-1">
         {label} {required && <span className="text-red-500">*</span>}
       </div>
       {children}

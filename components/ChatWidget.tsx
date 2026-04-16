@@ -89,10 +89,10 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
-            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-6rem)] bg-white rounded-xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-6rem)] bg-white dark:bg-neutral-950 rounded-xl shadow-2xl border border-gray-200 dark:border-neutral-800 flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-[#0A66C2]">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-neutral-800 bg-[#0A66C2]">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-xs font-bold">
                   R
@@ -120,7 +120,7 @@ export default function ChatWidget() {
                 <div className="w-7 h-7 rounded-full bg-[#0A66C2] flex items-center justify-center text-white text-[10px] font-bold shrink-0 mt-0.5">
                   R
                 </div>
-                <div className="bg-[#F4F2EE] rounded-lg rounded-tl-none px-3 py-2 text-sm text-[#191919] max-w-[85%]">
+                <div className="bg-[#F4F2EE] dark:bg-neutral-800 rounded-lg rounded-tl-none px-3 py-2 text-sm text-[#191919] dark:text-neutral-100 max-w-[85%]">
                   {rickOpeningMessage}
                 </div>
               </div>
@@ -141,7 +141,7 @@ export default function ChatWidget() {
                       className={`rounded-lg px-3 py-2 text-sm max-w-[85%] ${
                         isUser
                           ? "bg-[#0A66C2] text-white rounded-tr-none"
-                          : "bg-[#F4F2EE] text-[#191919] rounded-tl-none"
+                          : "bg-[#F4F2EE] dark:bg-neutral-800 text-[#191919] dark:text-neutral-100 rounded-tl-none"
                       }`}
                     >
                       {msg.parts.map((part, i) =>
@@ -161,7 +161,7 @@ export default function ChatWidget() {
                   <div className="w-7 h-7 rounded-full bg-[#0A66C2] flex items-center justify-center text-white text-[10px] font-bold shrink-0 mt-0.5">
                     R
                   </div>
-                  <div className="bg-[#F4F2EE] rounded-lg rounded-tl-none px-3 py-2 text-sm text-[#666]">
+                  <div className="bg-[#F4F2EE] dark:bg-neutral-800 rounded-lg rounded-tl-none px-3 py-2 text-sm text-[#666] dark:text-neutral-400">
                     <span className="inline-flex gap-1">
                       <span className="w-1.5 h-1.5 bg-[#999] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
                       <span className="w-1.5 h-1.5 bg-[#999] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
@@ -178,13 +178,13 @@ export default function ChatWidget() {
                 e.preventDefault();
                 handleSend(input);
               }}
-              className="border-t border-gray-200 px-4 py-3 flex gap-2"
+              className="border-t border-gray-200 dark:border-neutral-800 px-4 py-3 flex gap-2"
             >
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask Rick anything..."
-                className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white text-[#191919] placeholder:text-gray-400 focus:outline-none focus:border-[#0A66C2] focus:ring-1 focus:ring-[#0A66C2]"
+                className="flex-1 px-3 py-2 text-sm border border-gray-300 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-900 text-[#191919] dark:text-neutral-100 placeholder:text-gray-400 dark:placeholder:text-neutral-500 focus:outline-none focus:border-[#0A66C2] focus:ring-1 focus:ring-[#0A66C2]"
               />
               <button
                 type="submit"

@@ -44,11 +44,11 @@ function NodeBox({
   accent?: boolean;
 }) {
   const styles = {
-    blue: "border-[#0A66C2]/25 bg-white",
-    indigo: "border-indigo-300/40 bg-indigo-50/30",
-    amber: "border-amber-300/40 bg-amber-50/30",
-    emerald: "border-emerald-300/40 bg-emerald-50/30",
-    slate: "border-gray-200 bg-gray-50/50",
+    blue: "border-[#0A66C2]/25 bg-white dark:bg-neutral-900",
+    indigo: "border-indigo-300/40 dark:border-indigo-700/40 bg-indigo-50/30 dark:bg-indigo-950/30",
+    amber: "border-amber-300/40 dark:border-amber-700/40 bg-amber-50/30 dark:bg-amber-950/30",
+    emerald: "border-emerald-300/40 dark:border-emerald-700/40 bg-emerald-50/30 dark:bg-emerald-950/30",
+    slate: "border-gray-200 dark:border-neutral-700 bg-gray-50/50 dark:bg-neutral-800/50",
   };
 
   return (
@@ -56,12 +56,12 @@ function NodeBox({
       {...fadeUp(delay)}
       className={`rounded-xl border-2 ${styles[color]} p-4 shadow-sm relative ${accent ? "ring-1 ring-indigo-200/50" : ""}`}
     >
-      <h4 className="text-sm font-bold text-[#191919]">{title}</h4>
-      {subtitle && <p className="text-xs text-[#666] mt-0.5">{subtitle}</p>}
+      <h4 className="text-sm font-bold text-[#191919] dark:text-white">{title}</h4>
+      {subtitle && <p className="text-xs text-[#666] dark:text-neutral-400 mt-0.5">{subtitle}</p>}
       {items && (
         <ul className="mt-2 space-y-1">
           {items.map((item) => (
-            <li key={item} className="text-xs text-[#555] flex items-start gap-1.5">
+            <li key={item} className="text-xs text-[#555] dark:text-neutral-400 flex items-start gap-1.5">
               <span className="w-1 h-1 rounded-full bg-[#0A66C2] mt-1.5 shrink-0" />
               {item}
             </li>
@@ -74,13 +74,13 @@ function NodeBox({
 
 export default function ArchitectureDiagram() {
   return (
-    <section className="w-full bg-white py-12 md:py-16 overflow-hidden">
+    <section className="w-full bg-white dark:bg-neutral-950 py-12 md:py-16 overflow-hidden">
       <div className="max-w-5xl mx-auto px-6">
         <motion.div {...fadeUp(0)}>
-          <h2 className="text-2xl font-bold text-[#191919] mb-2">
+          <h2 className="text-2xl font-bold text-[#191919] dark:text-white mb-2">
             How I Build Multi-Agent Systems
           </h2>
-          <p className="text-[#666] mb-10 max-w-2xl">
+          <p className="text-[#666] dark:text-neutral-400 mb-10 max-w-2xl">
             A tiered orchestration pattern — cost-effective agents on the front
             line, validation layers that eliminate hallucinations, a capable
             supervisor working in tandem with human oversight, and a single
@@ -90,11 +90,11 @@ export default function ArchitectureDiagram() {
 
         {/* Layer 0: User */}
         <motion.div {...fadeUp(0.05)} className="flex justify-center">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#F4F2EE] border border-gray-200">
-            <svg className="w-4 h-4 text-[#666]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#F4F2EE] dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700">
+            <svg className="w-4 h-4 text-[#666] dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0" />
             </svg>
-            <span className="text-sm font-medium text-[#444]">User / Customer</span>
+            <span className="text-sm font-medium text-[#444] dark:text-neutral-300">User / Customer</span>
           </div>
         </motion.div>
 
@@ -106,7 +106,7 @@ export default function ArchitectureDiagram() {
             <span className="text-[10px] font-semibold uppercase tracking-widest text-[#0A66C2]">
               Layer 1 — Client-Facing Agents
             </span>
-            <p className="text-[10px] text-[#999] mt-0.5">Cost-effective models / High volume / Contract-driven behavior</p>
+            <p className="text-[10px] text-[#999] dark:text-neutral-500 mt-0.5">Cost-effective models / High volume / Contract-driven behavior</p>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <NodeBox
@@ -153,7 +153,7 @@ export default function ArchitectureDiagram() {
             <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600">
               Validation Layer — Hallucination Elimination
             </span>
-            <p className="text-[10px] text-[#999] mt-0.5">Every claim verified before it reaches the next layer</p>
+            <p className="text-[10px] text-[#999] dark:text-neutral-500 mt-0.5">Every claim verified before it reaches the next layer</p>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto">
             <NodeBox
@@ -188,7 +188,7 @@ export default function ArchitectureDiagram() {
             <span className="text-[10px] font-semibold uppercase tracking-widest text-indigo-600">
               Layer 2 — Supervisor + Human-in-the-Loop
             </span>
-            <p className="text-[10px] text-[#999] mt-0.5">Capable model / Complex decisions / Human oversight</p>
+            <p className="text-[10px] text-[#999] dark:text-neutral-500 mt-0.5">Capable model / Complex decisions / Human oversight</p>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
             <NodeBox
@@ -227,7 +227,7 @@ export default function ArchitectureDiagram() {
               (tool) => (
                 <span
                   key={tool}
-                  className="px-2.5 py-1 text-[10px] font-medium rounded-md bg-indigo-100 text-indigo-700 border border-indigo-200/50"
+                  className="px-2.5 py-1 text-[10px] font-medium rounded-md bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-700/50"
                 >
                   {tool}
                 </span>
@@ -244,7 +244,7 @@ export default function ArchitectureDiagram() {
             <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
               Layer 3 — Infrastructure
             </span>
-            <p className="text-[10px] text-[#999] mt-0.5">Single source of truth / Write-through caching</p>
+            <p className="text-[10px] text-[#999] dark:text-neutral-500 mt-0.5">Single source of truth / Write-through caching</p>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto">
             <NodeBox
@@ -274,7 +274,7 @@ export default function ArchitectureDiagram() {
         {/* Legend */}
         <motion.div
           {...fadeUp(0.75)}
-          className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-[#999]"
+          className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-[#999] dark:text-neutral-500"
         >
           <span className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-[#0A66C2]" />

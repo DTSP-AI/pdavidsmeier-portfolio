@@ -65,13 +65,13 @@ interface MemorySectionProps {
 
 export default function MemorySection({ videoSrc }: MemorySectionProps) {
   return (
-    <section className="w-full bg-[#F4F2EE] py-12 md:py-16 overflow-hidden">
+    <section className="w-full bg-[#F4F2EE] dark:bg-neutral-900 py-12 md:py-16 overflow-hidden">
       <div className="max-w-4xl mx-auto px-6">
         <motion.div {...fadeUp(0)}>
-          <h2 className="text-2xl font-bold text-[#191919] mb-2">
+          <h2 className="text-2xl font-bold text-[#191919] dark:text-white mb-2">
             4-Layer Memory & Knowledge Graphs
           </h2>
-          <p className="text-[#666] mb-10 max-w-2xl">
+          <p className="text-[#666] dark:text-neutral-400 mb-10 max-w-2xl">
             Every agent system I build has the same memory backbone — a
             write-through architecture with PostgreSQL as the single source of
             truth and three progressively faster cache layers above it. Context
@@ -82,7 +82,7 @@ export default function MemorySection({ videoSrc }: MemorySectionProps) {
         {/* Video player */}
         <motion.div
           {...fadeUp(0.1)}
-          className="mb-10 rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-black aspect-video"
+          className="mb-10 rounded-xl overflow-hidden border border-gray-200 dark:border-neutral-700 shadow-sm bg-black aspect-video"
         >
           {videoSrc ? (
             <video
@@ -110,7 +110,7 @@ export default function MemorySection({ videoSrc }: MemorySectionProps) {
 
         {/* 4-Layer visualization */}
         <div className="mb-10">
-          <motion.h3 {...fadeUp(0.15)} className="text-lg font-bold text-[#191919] mb-5">
+          <motion.h3 {...fadeUp(0.15)} className="text-lg font-bold text-[#191919] dark:text-white mb-5">
             The Memory Stack
           </motion.h3>
           <div className="space-y-4">
@@ -119,7 +119,7 @@ export default function MemorySection({ videoSrc }: MemorySectionProps) {
                 <div className="flex items-baseline justify-between mb-1.5">
                   <div className="flex items-center gap-2">
                     <span className={`w-2.5 h-2.5 rounded-full ${layer.color}`} />
-                    <span className="text-sm font-semibold text-[#191919]">
+                    <span className="text-sm font-semibold text-[#191919] dark:text-white">
                       {layer.name}
                     </span>
                   </div>
@@ -127,7 +127,7 @@ export default function MemorySection({ videoSrc }: MemorySectionProps) {
                     {layer.latency}
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-1.5 mb-2">
+                <div className="w-full bg-gray-200 dark:bg-neutral-700 rounded-full h-1.5 mb-2">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: "100%" }}
@@ -137,14 +137,14 @@ export default function MemorySection({ videoSrc }: MemorySectionProps) {
                     style={{ maxWidth: layer.barWidth === "w-full" ? "100%" : undefined }}
                   />
                 </div>
-                <p className="text-xs text-[#666] leading-relaxed">{layer.desc}</p>
+                <p className="text-xs text-[#666] dark:text-neutral-400 leading-relaxed">{layer.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
 
         {/* Knowledge graph features */}
-        <motion.h3 {...fadeUp(0.5)} className="text-lg font-bold text-[#191919] mb-5">
+        <motion.h3 {...fadeUp(0.5)} className="text-lg font-bold text-[#191919] dark:text-white mb-5">
           Knowledge Graph Construction
         </motion.h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -152,12 +152,12 @@ export default function MemorySection({ videoSrc }: MemorySectionProps) {
             <motion.div
               key={feat.title}
               {...fadeUp(0.55 + i * 0.08)}
-              className="bg-white rounded-xl border border-gray-200 p-5"
+              className="bg-white dark:bg-neutral-950 rounded-xl border border-gray-200 dark:border-neutral-800 p-5"
             >
-              <h4 className="text-sm font-bold text-[#191919] mb-1.5">
+              <h4 className="text-sm font-bold text-[#191919] dark:text-white mb-1.5">
                 {feat.title}
               </h4>
-              <p className="text-xs text-[#666] leading-relaxed">{feat.desc}</p>
+              <p className="text-xs text-[#666] dark:text-neutral-400 leading-relaxed">{feat.desc}</p>
             </motion.div>
           ))}
         </div>

@@ -72,20 +72,20 @@ interface SecuritySectionProps {
 
 export default function SecuritySection({ videoSrc }: SecuritySectionProps) {
   return (
-    <section className="w-full bg-white py-12 md:py-16 overflow-hidden">
+    <section className="w-full bg-white dark:bg-neutral-950 py-12 md:py-16 overflow-hidden">
       <div className="max-w-4xl mx-auto px-6">
         <motion.div {...fadeUp(0)}>
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-red-50 border border-red-200 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 flex items-center justify-center">
               <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-[#191919]">
+            <h2 className="text-2xl font-bold text-[#191919] dark:text-white">
               Agent Security & Prompt Fortification
             </h2>
           </div>
-          <p className="text-[#666] mb-10 max-w-2xl">
+          <p className="text-[#666] dark:text-neutral-400 mb-10 max-w-2xl">
             AI agents that talk to users are attack surfaces. Every system I
             build treats prompt injection as a first-class threat — not an
             afterthought. Here's how the defenses are layered, without giving
@@ -96,7 +96,7 @@ export default function SecuritySection({ videoSrc }: SecuritySectionProps) {
         {/* Video player */}
         <motion.div
           {...fadeUp(0.1)}
-          className="mb-10 rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-black aspect-video"
+          className="mb-10 rounded-xl overflow-hidden border border-gray-200 dark:border-neutral-700 shadow-sm bg-black aspect-video"
         >
           {videoSrc ? (
             <video
@@ -129,17 +129,17 @@ export default function SecuritySection({ videoSrc }: SecuritySectionProps) {
               key={def.title}
               {...fadeUp(0.2 + i * 0.07)}
               whileHover={{ y: -2, boxShadow: "0 8px 20px rgba(0,0,0,0.06)" }}
-              className="bg-[#FAFAFA] rounded-xl border border-gray-200 p-5 transition-shadow"
+              className="bg-[#FAFAFA] dark:bg-neutral-900 rounded-xl border border-gray-200 dark:border-neutral-800 p-5 transition-shadow"
             >
               <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-lg bg-[#0A66C2]/10 flex items-center justify-center text-[#0A66C2] shrink-0 mt-0.5">
+                <div className="w-9 h-9 rounded-lg bg-[#0A66C2]/10 dark:bg-[#0A66C2]/20 flex items-center justify-center text-[#0A66C2] dark:text-[#4A9EFF] shrink-0 mt-0.5">
                   {def.icon}
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-[#191919] mb-1">
+                  <h4 className="text-sm font-bold text-[#191919] dark:text-white mb-1">
                     {def.title}
                   </h4>
-                  <p className="text-xs text-[#666] leading-relaxed">
+                  <p className="text-xs text-[#666] dark:text-neutral-400 leading-relaxed">
                     {def.desc}
                   </p>
                 </div>
@@ -151,12 +151,12 @@ export default function SecuritySection({ videoSrc }: SecuritySectionProps) {
         {/* Bottom callout */}
         <motion.div
           {...fadeUp(0.7)}
-          className="mt-8 p-4 rounded-xl bg-[#F4F2EE] border border-gray-200 text-center"
+          className="mt-8 p-4 rounded-xl bg-[#F4F2EE] dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-center"
         >
-          <p className="text-sm text-[#444]">
+          <p className="text-sm text-[#444] dark:text-neutral-300">
             The specific techniques, detection patterns, and enforcement
             mechanisms are proprietary — but the results are testable.{" "}
-            <span className="font-semibold text-[#191919]">
+            <span className="font-semibold text-[#191919] dark:text-white">
               Try to jailbreak Rick in the chat.
             </span>{" "}
             See what happens.
