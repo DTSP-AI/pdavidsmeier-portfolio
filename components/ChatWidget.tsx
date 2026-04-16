@@ -13,6 +13,7 @@ export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const isLoading = status === "submitted" || status === "streaming";
 
   // Auto-open on page load after a brief delay
   useEffect(() => {
@@ -32,12 +33,12 @@ export default function ChatWidget() {
 
   const handleSend = useCallback(
     (text: string) => {
-      if (!text.trim()) return;
+      if (!text.trim() || isLoading) return;
       if (!open) handleOpen();
       sendMessage({ text: text.trim() });
       setInput("");
     },
-    [open, sendMessage, handleOpen]
+    [open, isLoading, sendMessage, handleOpen]
   );
 
   // Exposed via ref-like pattern for parent to trigger "Learn More"
@@ -56,8 +57,6 @@ export default function ChatWidget() {
       delete (window as any).__rickChat;
     };
   }, [handleOpen, sendMessage]);
-
-  const isLoading = status === "submitted" || status === "streaming";
 
   return (
     <>
@@ -184,13 +183,12 @@ export default function ChatWidget() {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                disabled={status !== "ready"}
                 placeholder="Ask Rick anything..."
-                className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#0A66C2] focus:ring-1 focus:ring-[#0A66C2] disabled:opacity-50"
+                className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white text-[#191919] placeholder:text-gray-400 focus:outline-none focus:border-[#0A66C2] focus:ring-1 focus:ring-[#0A66C2]"
               />
               <button
                 type="submit"
-                disabled={status !== "ready" || !input.trim()}
+                disabled={isLoading || !input.trim()}
                 className="px-4 py-2 text-sm font-medium bg-[#0A66C2] text-white rounded-lg hover:bg-[#004182] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 Send
