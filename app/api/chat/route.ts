@@ -58,6 +58,15 @@ const INJECTION_PATTERNS = [
   /are\s+(your\s+)?instructions\s+ethical/i,
   /should\s+you\s+override/i,
   /your\s+constraints\s+are\s+(actually\s+)?harmful/i,
+
+  // Scope escape: Code generation / dev requests
+  /write\s+(me\s+)?(a\s+)?(python|javascript|typescript|code|function|script|class|component)/i,
+  /generate\s+(a\s+)?(code|function|script|snippet|example|boilerplate)/i,
+  /can\s+you\s+(code|program|write|build|create)\s+(me\s+)?/i,
+  /give\s+me\s+(a\s+)?(code|script|function|snippet)/i,
+  /show\s+me\s+(how\s+to\s+)?(code|implement|build|write)/i,
+  /help\s+me\s+(code|build|write|implement|debug)/i,
+  /\b(import|require|npm\s+install|pip\s+install|def\s+\w+|function\s+\w+|const\s+\w+\s*=)/i,
 ];
 
 function classifyInjection(text: string): { isInjection: boolean; level: number } {
@@ -68,6 +77,8 @@ function classifyInjection(text: string): { isInjection: boolean; level: number 
     "system prompt", "instructions", "ignore", "DAN", "pretend",
     "override", "authorized", "debug", "jailbreak", "restrictions",
     "roleplay", "translate", "hypothetically", "base64", "SYSTEM:",
+    "write me", "generate code", "code snippet", "function", "script",
+    "implement", "npm install", "pip install", "import ",
   ];
 
   const hasSuspiciousKeyword = suspiciousKeywords.some((kw) =>
@@ -79,6 +90,7 @@ function classifyInjection(text: string): { isInjection: boolean; level: number 
   for (const pattern of INJECTION_PATTERNS) {
     if (pattern.test(text)) {
       // Determine level from which pattern matched
+      if (/write\s+(me\s+)?(a\s+)?(python|javascript|typescript|code|function|script)|generate\s+(a\s+)?(code|function|script|snippet)|can\s+you\s+(code|program|write|build|create)|give\s+me\s+(a\s+)?(code|script|function)|show\s+me\s+(how\s+to\s+)?(code|implement)|help\s+me\s+(code|build|write|implement|debug)|\b(import|require|npm\s+install|pip\s+install|def\s+\w+|function\s+\w+|const\s+\w+\s*=)/i.test(text)) return { isInjection: true, level: 4 };
       if (/are\s+(your\s+)?instructions\s+ethical|should\s+you\s+override|constraints\s+are.*harmful/i.test(text)) return { isInjection: true, level: 9 };
       if (/list\s+(everything|what)\s+you\s+(can'?t|cannot)|describe\s+what\s+you\s+cannot/i.test(text)) return { isInjection: true, level: 8 };
       if (/SYSTEM\s*:|---\s*\n?\s*new\s+instructions|\[SYSTEM\]/i.test(text)) return { isInjection: true, level: 7 };
