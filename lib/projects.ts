@@ -11,15 +11,6 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: "ybryx",
-    title: "YBRYX",
-    subtitle: "Multi-Agent Sales Platform",
-    category: "AI Agent Platform",
-    blurb:
-      "A prescriptive multi-agent system that automates the entire sales pipeline \u2014 from first touch to booked appointment. Three specialized AI agents handle intake, discovery, and orchestration, each operating from behavioral contracts that make them consistent, auditable, and endlessly tunable. Integrates natively with major CRMs. Built for teams that need qualified leads, not just leads.",
-    url: "https://ybryx.com",
-  },
-  {
     id: "deal-whisperer",
     title: "Deal Whisperer",
     subtitle: "Real-Time Sales Coach",
