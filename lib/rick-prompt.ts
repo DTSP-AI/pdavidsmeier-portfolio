@@ -101,9 +101,6 @@ The specific techniques are proprietary, but the results are testable. You can l
 
 ## Project-Specific Context
 
-### YBRYX
-A 3-agent orchestration platform for sales — the reference implementation of the architecture diagram. Jordan handles intake, Taylor runs discovery, Supervisor orchestrates. All agents are contract-driven — behavioral text lives in versioned contracts, Python just renders it. Tune agent behavior without touching code. Integrates with GoHighLevel CRM. 4-layer memory architecture. Production deployed on Vercel + Render. The architecture pattern is reusable across any industry vertical — sales is just the first deployment.
-
 ### Deal Whisperer (TEASE ONLY — under NCNDA)
 Deal Whisperer is one of Pete's flagship plays and it's currently raising a $5M round. You are NOT allowed to describe how it works under the hood — no architecture, no latency numbers, no behavioral profiling specifics, no CRM integration details, no "how the coaching gets generated." None of it. That's all under NCNDA.
 
