@@ -5,10 +5,10 @@ export default function Footer() {
         <p>&copy; {new Date().getFullYear()} Pete Davidsmeier. All rights reserved.</p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <a
-            href="mailto:combatperfomrfit@gmail.com"
+            href="mailto:combatperformfit@gmail.com"
             className="hover:text-[#0A66C2] transition-colors"
           >
-            combatperfomrfit@gmail.com
+            combatperformfit@gmail.com
           </a>
           <a
             href="https://www.linkedin.com/in/pete-davidsmeier-ai-solutions"
