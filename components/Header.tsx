@@ -81,7 +81,7 @@ export default function Header({ onRequestResume }: HeaderProps) {
               to deployment.
             </p>
 
-            <div className="flex items-center gap-3 mt-5 justify-center md:justify-start">
+            <div className="flex flex-wrap items-center gap-3 mt-5 justify-center md:justify-start">
               {socials.map((s) => (
                 <a
                   key={s.label}
