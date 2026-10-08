@@ -34,7 +34,11 @@ const socials = [
   },
 ];
 
-export default function Header() {
+interface HeaderProps {
+  onRequestResume: () => void;
+}
+
+export default function Header({ onRequestResume }: HeaderProps) {
   return (
     <section className="w-full bg-white dark:bg-neutral-950 border-b border-gray-200 dark:border-neutral-800 relative">
       <div className="max-w-4xl mx-auto px-6 py-12 md:py-16">
@@ -65,10 +69,16 @@ export default function Header() {
             <p className="text-lg text-[#0A66C2] dark:text-[#4A9EFF] font-medium mt-1">
               AI Systems Architect
             </p>
-            <p className="text-[#666] dark:text-neutral-400 mt-3 max-w-xl leading-relaxed">
-              I design and ship production AI systems — multi-agent pipelines,
-              real-time coaching, clinical decision support, voice AI. Full
-              stack, full lifecycle, from architecture to deployment.
+            <p className="text-[#191919] dark:text-neutral-100 mt-3 max-w-xl leading-relaxed font-medium">
+              I use AI to build. I do not let AI decide what gets built. Every
+              system here runs on an architecture I designed first — contract-driven
+              agents, validation layers, a single source of truth — and the AI
+              executes inside it. Nothing vibe-coded on the fly ships to production.
+            </p>
+            <p className="text-[#666] dark:text-neutral-400 mt-2 max-w-xl leading-relaxed">
+              Multi-agent pipelines, real-time coaching, clinical decision
+              support, voice AI. Full stack, full lifecycle, from architecture
+              to deployment.
             </p>
 
             <div className="flex items-center gap-3 mt-5 justify-center md:justify-start">
@@ -85,6 +95,16 @@ export default function Header() {
                   {s.label}
                 </a>
               ))}
+              <button
+                type="button"
+                onClick={onRequestResume}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0A66C2] text-white text-sm font-medium hover:bg-[#004182] transition-colors cursor-pointer"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                </svg>
+                Request Resume
+              </button>
             </div>
           </div>
         </motion.div>

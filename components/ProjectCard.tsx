@@ -61,14 +61,21 @@ export default function ProjectCard({
             <span aria-hidden>🔒</span> Request Access &rarr;
           </button>
         ) : project.url ? (
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-[#0A66C2] hover:underline"
-          >
-            View Application &rarr;
-          </a>
+          <>
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-[#0A66C2] hover:underline"
+            >
+              {project.inDev ? "How It Works" : "View Application"} &rarr;
+            </a>
+            {project.inDev && (
+              <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300">
+                In Development
+              </span>
+            )}
+          </>
         ) : null}
       </div>
     </motion.div>

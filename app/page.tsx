@@ -20,9 +20,17 @@ export default function Home() {
     }
   }, []);
 
+  const handleRequestResume = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const fn = (window as any).__rickResume;
+    if (typeof fn === "function") {
+      (fn as () => void)();
+    }
+  }, []);
+
   return (
     <>
-      <Header />
+      <Header onRequestResume={handleRequestResume} />
       <ProjectGrid onLearnMore={handleLearnMore} />
       <ArchitectureDiagram />
       <MemorySection videoSrc="/video_clips/KG Example-highlight.mp4" />

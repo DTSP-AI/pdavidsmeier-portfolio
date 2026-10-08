@@ -4,12 +4,18 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { rickOpeningMessage } from "@/lib/rick-prompt";
+import {
+  rickOpeningMessage,
+  rickProjectInquiryMessage,
+  rickResumeRequestMessage,
+  rickSuggestedPrompts,
+} from "@/lib/rick-prompt";
+import type { RickUIMessage } from "@/app/api/chat/route";
 
 const transport = new DefaultChatTransport({ api: "/api/chat" });
 
 export default function ChatWidget() {
-  const { messages, sendMessage, status } = useChat({ transport });
+  const { messages, sendMessage, status } = useChat<RickUIMessage>({ transport });
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -49,12 +55,22 @@ export default function ChatWidget() {
       handleOpen();
       // Small delay so the panel renders first
       setTimeout(() => {
-        sendMessage({ text: `Tell me about ${projectTitle}` });
+        sendMessage({ text: rickProjectInquiryMessage(projectTitle) });
+      }, 300);
+    };
+    // Header "Request Resume" button → opens Rick and fires the resume flow
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).__rickResume = () => {
+      handleOpen();
+      setTimeout(() => {
+        sendMessage({ text: rickResumeRequestMessage });
       }, 300);
     };
     return () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (window as any).__rickChat;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any).__rickResume;
     };
   }, [handleOpen, sendMessage]);
 
@@ -144,13 +160,35 @@ export default function ChatWidget() {
                           : "bg-[#F4F2EE] dark:bg-neutral-800 text-[#191919] dark:text-neutral-100 rounded-tl-none"
                       }`}
                     >
-                      {msg.parts.map((part, i) =>
-                        part.type === "text" ? (
-                          <span key={i} className="whitespace-pre-wrap">
-                            {part.text}
-                          </span>
-                        ) : null
-                      )}
+                      {msg.parts.map((part, i) => {
+                        if (part.type === "text") {
+                          return (
+                            <span key={i} className="whitespace-pre-wrap">
+                              {part.text}
+                            </span>
+                          );
+                        }
+                        if (
+                          part.type === "tool-check_resume_access" &&
+                          part.state === "output-available" &&
+                          part.output.approved
+                        ) {
+                          return (
+                            <a
+                              key={part.toolCallId}
+                              href={part.output.downloadUrl}
+                              download="Pete_Davidsmeier_Resume.pdf"
+                              className="mt-2 inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg bg-[#0A66C2] text-white hover:bg-[#004182] transition-colors"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+                              </svg>
+                              Download Resume (PDF)
+                            </a>
+                          );
+                        }
+                        return null;
+                      })}
                     </div>
                   </div>
                 );
@@ -171,6 +209,22 @@ export default function ChatWidget() {
                 </div>
               )}
             </div>
+
+            {/* Suggested prompts */}
+            {!isLoading && (
+              <div className="px-4 pt-2 pb-1 flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {rickSuggestedPrompts.map((p) => (
+                  <button
+                    key={p.label}
+                    type="button"
+                    onClick={() => handleSend(p.text)}
+                    className="shrink-0 px-3 py-1 text-xs font-medium rounded-full border border-[#0A66C2]/40 text-[#0A66C2] dark:text-[#4A9EFF] hover:bg-[#0A66C2] hover:text-white dark:hover:text-white transition-colors cursor-pointer whitespace-nowrap"
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Input */}
             <form

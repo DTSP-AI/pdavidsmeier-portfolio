@@ -7,6 +7,9 @@ export interface Project {
   url: string | null;
   comingSoon?: boolean;
   gated?: boolean;
+  // Live but still in development: card links out (surface-level page only)
+  // and shows an "In Development" badge.
+  inDev?: boolean;
 }
 
 export const projects: Project[] = [
@@ -27,6 +30,16 @@ export const projects: Project[] = [
     blurb:
       "A clinical decision support platform that ingests live patient biometrics from 10+ sources \u2014 wearables, BLE medical devices, even camera-based vitals \u2014 and generates real-time clinical insights. Five-level urgency escalation, drug interaction detection, and protocol adherence checking. Built on healthcare interoperability standards. Designed for clinicians who need answers now, not after the chart review.",
     url: "https://real-time-med-agent.vercel.app/",
+  },
+  {
+    id: "nodisclose",
+    title: "NoDisclose",
+    subtitle: "Agent-Drafted Contracts, Anchored Proof",
+    category: "Legal Tech / Agentic Contracts",
+    blurb:
+      "Describe an agreement in plain English and an agent drafts it from counsel-approved templates. The counterparty verifies identity and signs, the executed document is anchored as a tamper-evident fingerprint, and any payment settles wallet-to-wallet — the platform never touches the money. Only a hash is ever public; the agreement stays private. In active development under DTSP-AI Technologies.",
+    url: "https://nodisclose.com/how-it-works",
+    inDev: true,
   },
   {
     id: "numen-ai",
