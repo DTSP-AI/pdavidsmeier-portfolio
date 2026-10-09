@@ -15,7 +15,24 @@ import {
   rickTopicDirectives,
   rickCounterInjectionDirective,
 } from "@/lib/rick-prompt";
-import { isApprovedRecipient, mintResumeToken } from "@/lib/resume-access";
+import {
+  isApprovedRecipient,
+  mintResumeToken,
+  normalizeName,
+} from "@/lib/resume-access";
+import { upsertRequest, saveRequest } from "@/lib/access-vetting/store";
+import { fireVettingRoutine } from "@/lib/access-vetting/routine";
+import { decisionUrls } from "@/lib/access-vetting/decision";
+
+function siteBaseUrl(req: Request): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
+  if (explicit) return explicit.replace(/\/$/, "");
+  const host = req.headers.get("x-forwarded-host") ?? req.headers.get("host") ?? "";
+  const proto = req.headers.get("x-forwarded-proto") ?? "https";
+  return host ? `${proto}://${host}` : "";
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const maxDuration = 30;
 
@@ -24,10 +41,10 @@ export const maxDuration = 30;
 // Rick only ever sees {approved: boolean}. He cannot leak what he
 // cannot see.
 
-const rickTools = {
+const buildRickTools = (req: Request) => ({
   check_resume_access: tool({
     description:
-      "Check whether a visitor is on Pete's approved resume list. Call this ONLY after the visitor has given you their full name in response to a resume request. Returns approved=true with a download link the UI renders as a button, or approved=false.",
+      "Check whether a visitor is on Pete's approved resume list. Call this ONLY after the visitor has given you their full name in response to a resume request. Returns approved=true with a download link the UI renders as a button, or approved=false (then collect their email and call request_resume_access).",
     inputSchema: z.object({
       fullName: z
         .string()
@@ -38,7 +55,7 @@ const rickTools = {
       if (!secret) {
         return { approved: false as const, reason: "gate-not-configured" };
       }
-      if (!isApprovedRecipient(fullName)) {
+      if (!(await isApprovedRecipient(fullName))) {
         return { approved: false as const };
       }
       const token = mintResumeToken(fullName, secret);
@@ -48,9 +65,66 @@ const rickTools = {
       };
     },
   }),
-};
 
-export type RickUITools = InferUITools<typeof rickTools>;
+  // Access-vetting pattern (lib/access-vetting/*): record the request once,
+  // fire the Claude routine once, Pete decides via signed link.
+  request_resume_access: tool({
+    description:
+      "Submit a resume access request for a visitor who is NOT on the approved list. Call ONLY after check_resume_access returned approved=false AND the visitor has given you an email address. Pete is notified and decides. Returns status: 'pending' (request sent to Pete), 'already-pending' (Pete already has it), 'denied' (Pete already passed), 'approved' (run check_resume_access again), 'invalid-email', or 'unavailable'.",
+    inputSchema: z.object({
+      fullName: z.string().describe("The visitor's full name exactly as they gave it"),
+      email: z.string().describe("The visitor's email address exactly as they gave it"),
+      context: z
+        .string()
+        .describe(
+          "One or two sentences: who they said they are, company/role if given, and why they want the resume"
+        ),
+    }),
+    execute: async ({ fullName, email, context }) => {
+      const secret = process.env.NCNDA_GATE_SECRET;
+      const cleanEmail = email.trim().toLowerCase();
+      if (!secret) return { status: "unavailable" as const };
+      if (!EMAIL_RE.test(cleanEmail)) return { status: "invalid-email" as const };
+      const normalizedName = normalizeName(fullName);
+      if (!normalizedName) return { status: "invalid-email" as const };
+
+      try {
+        const { record, shouldFire } = await upsertRequest({
+          name: fullName.trim(),
+          normalizedName,
+          email: cleanEmail,
+          context: context.slice(0, 600),
+        });
+        if (record.status === "denied") return { status: "denied" as const };
+        if (record.status === "approved") return { status: "approved" as const };
+        if (!shouldFire) return { status: "already-pending" as const };
+
+        const { approveUrl, denyUrl } = decisionUrls(siteBaseUrl(req), record.id, secret);
+        const fire = await fireVettingRoutine({
+          app: "portfolio",
+          asset: "resume",
+          requestId: record.id,
+          name: record.name,
+          email: record.email,
+          context: record.context,
+          approveUrl,
+          denyUrl,
+        });
+        if (fire.fired) {
+          await saveRequest({ ...record, routineSessionUrl: fire.sessionUrl });
+        } else {
+          console.error("[access-vetting] routine not fired:", fire.reason);
+        }
+        return { status: "pending" as const };
+      } catch (err) {
+        console.error("[access-vetting] request failed:", err);
+        return { status: "unavailable" as const };
+      }
+    },
+  }),
+});
+
+export type RickUITools = InferUITools<ReturnType<typeof buildRickTools>>;
 export type RickUIMessage = UIMessage<never, UIDataTypes, RickUITools>;
 
 // ── Injection classifier ────────────────────────────────────────────
@@ -233,7 +307,7 @@ export async function POST(req: Request) {
     model: openai("gpt-4o"),
     system: standardSystem,
     messages: modelMessages,
-    tools: rickTools,
+    tools: buildRickTools(req),
     stopWhen: stepCountIs(3),
     temperature: 0.7,
     maxOutputTokens: 800,

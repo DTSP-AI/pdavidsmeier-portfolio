@@ -7,8 +7,12 @@
 // nothing because Rick holds nothing.
 
 import { createHmac, timingSafeEqual } from "crypto";
+import { getApprovedNames } from "@/lib/access-vetting/store";
 
-// Approved recipients. Add a full name here to grant resume access.
+// Seed recipients, always approved. Everyone else is approved through the
+// access-vetting flow (lib/access-vetting/*): Rick collects name + email,
+// a Claude routine vets the person and pings Pete, Pete taps approve, and
+// the name lands in the Blob-backed approved list read below.
 export const APPROVED_RESUME_RECIPIENTS: readonly string[] = [
   "Ben Stover",
   "Pete Davidsmeier",
@@ -31,10 +35,16 @@ export function normalizeName(raw: string): string {
     .trim();
 }
 
-export function isApprovedRecipient(name: string): boolean {
+export async function isApprovedRecipient(name: string): Promise<boolean> {
   const n = normalizeName(name);
   if (!n) return false;
-  return APPROVED_RESUME_RECIPIENTS.some((a) => normalizeName(a) === n);
+  if (APPROVED_RESUME_RECIPIENTS.some((a) => normalizeName(a) === n)) return true;
+  try {
+    return (await getApprovedNames()).includes(n);
+  } catch {
+    // Store unreachable: fail closed for non-seed names.
+    return false;
+  }
 }
 
 export interface ResumeTokenPayload {
@@ -57,10 +67,12 @@ export function mintResumeToken(name: string, secret: string): string {
   return `${body}.${sign(body, secret)}`;
 }
 
-export function verifyResumeToken(
+export async function verifyResumeToken(
   token: string,
   secret: string
-): { valid: true; payload: ResumeTokenPayload } | { valid: false; reason: string } {
+): Promise<
+  { valid: true; payload: ResumeTokenPayload } | { valid: false; reason: string }
+> {
   const parts = token.split(".");
   if (parts.length !== 2) return { valid: false, reason: "malformed" };
   const [body, sig] = parts;
@@ -81,7 +93,7 @@ export function verifyResumeToken(
     return { valid: false, reason: "expired" };
   }
   // Re-check the bank at download time so revoking a name revokes live links.
-  if (!isApprovedRecipient(payload.name)) {
+  if (!(await isApprovedRecipient(payload.name))) {
     return { valid: false, reason: "not-approved" };
   }
   return { valid: true, payload };
