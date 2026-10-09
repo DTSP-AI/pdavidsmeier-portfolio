@@ -235,7 +235,7 @@ const handler = createMcpHandler(
       }
     );
   },
-  { serverInfo: { name: "dtsp-portfolio", version: "1.0.0" } }
+  { serverInfo: { name: "dtsp-portfolio", version: "1.1.0" } }
 );
 
 // Auth tiers (contract: auth.anonymous_scope = portfolio:read).
