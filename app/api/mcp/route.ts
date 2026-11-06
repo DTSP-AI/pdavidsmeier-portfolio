@@ -99,7 +99,8 @@ const handler = createMcpHandler(
               subtitle: p.subtitle,
               category: p.category,
               blurb: p.blurb,
-              url: p.url,
+              // Gated projects are reachable only through the NCNDA flow.
+              url: p.gated ? null : p.url,
               gated: p.gated === true,
               inDev: p.inDev === true,
               comingSoon: p.comingSoon === true,
