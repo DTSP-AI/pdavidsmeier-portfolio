@@ -34,12 +34,12 @@ export const projects: Project[] = [
   {
     id: "nodisclose",
     title: "NoDisclose",
-    subtitle: "Agent-Drafted Contracts, Anchored Proof",
+    subtitle: "Agentic Contract Platform",
     category: "Legal Tech / Agentic Contracts",
     blurb:
-      "Describe an agreement in plain English and an agent drafts it from counsel-approved templates. The counterparty verifies identity and signs, the executed document is anchored as a tamper-evident fingerprint, and any payment settles wallet-to-wallet — the platform never touches the money. Only a hash is ever public; the agreement stays private. In active development under DTSP-AI Technologies.",
+      "Agreements that go from plain English to signed, settled, and provable, without anyone having to trust the platform in the middle. An agentic contract product in active development under DTSP-AI Technologies. The walkthrough is available under NCNDA.",
     url: "https://nodisclose.com/how-it-works",
-    inDev: true,
+    gated: true,
   },
   {
     id: "numen-ai",
@@ -88,7 +88,7 @@ export const capabilities = [
   "Next.js",
   "PostgreSQL",
   "Knowledge Graphs",
-  "CRM Integration (Salesforce/HubSpot/GHL)",
+  "CRM Integration (Salesforce/HubSpot)",
   "HIPAA/TCPA Compliance",
   "Contract-Driven Architecture",
   "Healthcare Interoperability (FHIR/HL7)",
@@ -109,5 +109,5 @@ export const techStack: TechCategory[] = [
   { label: "Database", items: ["PostgreSQL", "Supabase", "Neo4j", "pgvector"] },
   { label: "Voice / RT", items: ["LiveKit", "Deepgram", "ElevenLabs", "Retell"] },
   { label: "Infra", items: ["Vercel", "Render", "Docker", "GitHub Actions"] },
-  { label: "Integrations", items: ["Salesforce", "GoHighLevel", "HubSpot", "Stripe"] },
+  { label: "Integrations", items: ["Salesforce", "HubSpot", "Stripe"] },
 ];

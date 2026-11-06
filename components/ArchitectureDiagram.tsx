@@ -244,7 +244,7 @@ export default function ArchitectureDiagram() {
             <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
               Layer 3 — Infrastructure
             </span>
-            <p className="text-[10px] text-[#999] dark:text-neutral-500 mt-0.5">Single source of truth / Write-through caching</p>
+            <p className="text-[10px] text-[#999] dark:text-neutral-500 mt-0.5">Single source of truth / Persistent cognitive memory</p>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto">
             <NodeBox
@@ -255,16 +255,16 @@ export default function ArchitectureDiagram() {
               delay={0.65}
             />
             <NodeBox
-              title="4-Layer Memory"
-              subtitle="Hot → SQLite → Vector → PG"
-              items={["Request-scoped caching", "Semantic search layer"]}
+              title="Cognitive Memory"
+              subtitle="Episodic · Semantic · Procedural"
+              items={["Experience retained across sessions", "Policy-governed capability use"]}
               color="slate"
               delay={0.68}
             />
             <NodeBox
               title="CRM / External"
               subtitle="Normalized sync"
-              items={["Salesforce, HubSpot, GHL", "Idempotent operations"]}
+              items={["Salesforce, HubSpot", "Idempotent operations"]}
               color="slate"
               delay={0.71}
             />
