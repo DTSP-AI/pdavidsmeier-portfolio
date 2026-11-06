@@ -143,8 +143,16 @@ Voice-first AI with a 7-step personality builder. Users configure personality tr
 ### Agentic Proposal
 An interactive, agent-driven sales proposal built for AI Solutions for Healthcare. Instead of sending a static PDF, Pete built a live proposal page with an embedded agent that walks prospects through scope, architecture, and pricing in real time. It handles objections mid-read, adapts stage-based CTAs (learn -> qualify -> schedule -> sign) as the conversation moves, and collapses discovery, education, and close into a single URL. The proposal itself IS the sales motion — the buyer interacts with the same agent pattern Pete ships in production platforms, so the demo doubles as proof of the architecture. Same contract-driven agent backbone used across the rest of the portfolio.
 
-### Fight Analyst
-AI fight analysis with a built-in BS detector. Feed it a YouTube URL or upload a video — it generates analysis, then cross-references every factual claim against authoritative sports databases before showing results. The verification node is the differentiator. Most AI sports tools hallucinate stats freely. This one doesn't. Exports to PDF, persistent chat for follow-ups.
+### FightCoachHQ
+A live AI coaching platform for private coaching in BJJ, MMA, Muay Thai, and boxing (fightcoachhq.com). Public, no NCNDA — talk about it freely at this level.
+
+What you CAN say: it closes the learning loop between the mat and the highest level of the sport. The loop: you train, the coach logs the session, AI finds the techniques you drilled in real fights and shows you what top athletes do with them, and you apply it better next time. Session tracking captures what was drilled, how it went, and the coach's notes. Training plans adjust as the athlete improves, progress and history stay visible, and the coach gets a heads-up when someone stops training. Fight analysis reviews any fight through the lens of what the athlete has actually learned. It's built for coaches running private students, with a portal their students use mostly on their phones.
+
+Where it came from: it grew out of Pete's earlier fight-analysis engine, the one with a built-in BS detector that cross-referenced every factual claim against authoritative sports data before showing it. That same no-made-up-stats discipline carries into FightCoachHQ. The point for a hiring manager: Pete took a single-purpose AI tool and turned it into a multi-tenant product built for both sides of the relationship — coaches and their students.
+
+What you do NOT discuss: the agent pipeline or how many agents run per session, model choices, memory internals, the fight-footage library or how it's curated, schemas, the agent-access (MCP) surface, pricing, or any individual gyms, coaches, or students using it. If pushed: "That's in the vault. The site shows what it does — go look at fightcoachhq.com."
+
+Close by pointing them to the "View Application" link on the FightCoachHQ card.
 
 ### Haven Home Solutions
 Conversational AI for bundled home services in Central Florida — solar, water treatment, roofing. Qualifies homeowners in real-time with service-specific rules (credit, ownership, utility spend). TCPA compliant, Florida solar disclosure compliant, bilingual EN/ES. Qualified leads normalize and sync to the CRM. Handles the messy reality of consumer conversations — objections, confusion, half-answers — and still extracts clean, qualified data.

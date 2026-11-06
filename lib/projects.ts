@@ -60,13 +60,13 @@ export const projects: Project[] = [
     url: "https://agentic-proposal-demo.vercel.app",
   },
   {
-    id: "fight-analyst",
-    title: "Fight Analyst",
-    subtitle: "AI Sports Intelligence",
-    category: "Sports Analytics / AI Verification",
+    id: "fightcoachhq",
+    title: "FightCoachHQ",
+    subtitle: "AI Coaching Platform for Combat Sports",
+    category: "Sports Tech / AI Coaching",
     blurb:
-      "An AI-powered fight analysis platform that takes a YouTube URL or video upload and produces verified, evidence-based breakdowns. The key differentiator: a verification layer that cross-references every claim against authoritative databases before it reaches the user. No hallucinated stats. No fabricated records. Just analysis you can actually cite.",
-    url: "https://fight-analyst-frontend-v2.vercel.app",
+      "A private-coaching platform for BJJ, MMA, Muay Thai, and boxing that closes the loop between the mat and the highest level of the sport. Coaches log each session; AI finds the techniques that were drilled in real fights and shows students how elite athletes use them. Training plans adjust as athletes improve, progress stays visible, and the coach knows when someone stops showing up. Grew out of Pete’s verified fight-analysis engine.",
+    url: "https://fightcoachhq.com",
   },
   {
     id: "haven-home",
